@@ -93,6 +93,39 @@ body {
 }
 .intro-lead strong { color: var(--blue-dark); }
 
+/* 「無料」「登録不要」などの特徴バッジ */
+.badges {
+  list-style: none;
+  margin: 0 0 14px;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.badges li {
+  padding: 3px 12px;
+  border-radius: 999px;
+  background: var(--blue-light);
+  color: var(--blue-dark);
+  font-size: 13px;
+  font-weight: 700;
+  border: 1px solid #c9daf8;
+}
+
+/* 冒頭の個人情報の注意 */
+.intro-privacy {
+  margin: 16px 0 0;
+  max-width: 760px;
+  padding: 10px 14px;
+  background: #fff8e6;
+  border: 1px solid #f3d58a;
+  border-left: 4px solid #d99a00;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #4a3a12;
+}
+.intro-privacy strong { color: #7a4f00; }
+
 .steps {
   list-style: none;
   margin: 0;
@@ -269,7 +302,20 @@ textarea:focus {
   border-color: var(--blue);
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18);
 }
-::placeholder { color: #9aa8bb; }
+/* 入力例の文字：背景とのコントラスト比 4.5 以上（読みやすさの目安）を確保 */
+::placeholder { color: #66758a; opacity: 1; }
+
+/* 長い文章の入力欄の上に出す、個人情報の注意 */
+.field-privacy {
+  margin: 0 0 6px;
+  padding: 6px 10px;
+  background: #fff8e6;
+  border-left: 3px solid #d99a00;
+  border-radius: 6px;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #4a3a12;
+}
 
 .field.invalid input,
 .field.invalid textarea {
@@ -419,16 +465,41 @@ textarea:focus {
   .tagline { display: none; }
   .intro { padding-top: 22px; }
   .intro h1 { font-size: 22px; }
-  .steps { flex-direction: column; gap: 8px; }
-  .steps li { border-radius: 10px; }
+  .intro-lead { font-size: 15px; margin-bottom: 14px; }
+  .intro-privacy { font-size: 13px; }
 
-  .tool-tabs { grid-template-columns: repeat(2, 1fr); gap: 8px; margin: 20px 0 16px; }
-  .tool-tab { padding: 12px; }
+  /* 3つの手順は横に並べて、縦の長さを短くする */
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .steps li {
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px 6px;
+    border-radius: 10px;
+    font-size: 12px;
+    line-height: 1.4;
+    text-align: center;
+  }
+
+  /* ツールボタンは横長のコンパクトな形にして、入力欄を早く見せる */
+  .tool-tabs { grid-template-columns: repeat(2, 1fr); gap: 8px; margin: 18px 0 14px; }
+  .tool-tab { flex-direction: row; align-items: center; gap: 8px; padding: 10px; }
   .tool-tab:last-child { grid-column: 1 / -1; }
+  .tab-icon { width: 32px; height: 32px; flex-shrink: 0; }
+  .tab-icon svg { width: 18px; height: 18px; }
+  .tab-name { font-size: 14px; }
   .tab-sub { display: none; }
 
   .panel { padding: 18px 16px; }
   .form-actions .btn,
   .output-actions .btn { flex: 1 1 100%; }
   .output { min-height: 280px; }
+}
+
+/* 「視覚効果を減らす」設定の人には、アニメーションを止める */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
 }

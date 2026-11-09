@@ -6,6 +6,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Yu AI Tools | ChatGPTプロンプト作成ツール</title>
   <meta name="description" content="ChatGPTを仕事で使う初心者向け。フォームに入力するだけで、実用的なプロンプトが作れます。">
+  <!-- 検索エンジンに「このページの正式なURLはこれ」と伝える設定 -->
+  <link rel="canonical" href="https://yu-ai-lab-web.github.io/yu-ai-tools/">
+  <meta name="theme-color" content="#0b2545">
+
+  <!-- note・X・LINEなどにURLを貼ったときのカード表示（OGP） -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Yu AI Tools">
+  <meta property="og:title" content="Yu AI Tools | ChatGPTプロンプト作成ツール">
+  <meta property="og:description" content="ChatGPTを仕事で使う初心者向け。フォームに入力するだけで、メール・議事録・文章校正などのプロンプトが作れます。無料・登録不要。">
+  <meta property="og:url" content="https://yu-ai-lab-web.github.io/yu-ai-tools/">
+  <meta property="og:image" content="https://yu-ai-lab-web.github.io/yu-ai-tools/ogp.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Yu AI Tools ― ChatGPTのプロンプトを、入力するだけで作成">
+  <meta property="og:locale" content="ja_JP">
+  <meta name="twitter:card" content="summary_large_image">
+
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -15,7 +32,7 @@
     <div class="container header-inner">
       <div class="logo">
         <span class="logo-mark">Yu</span>
-        <span class="logo-text">プロンプト作成ツール</span>
+        <span class="logo-text">Yu AI Tools</span>
       </div>
       <p class="tagline">ChatGPTへの「お願い文」を、かんたん作成</p>
     </div>
@@ -26,15 +43,23 @@
     <!-- ===== はじめての方への説明 ===== -->
     <section class="intro">
       <h1>仕事で使えるプロンプトを、<br class="sp-only">入力するだけで。</h1>
+      <ul class="badges" aria-label="このツールの特徴">
+        <li>無料</li>
+        <li>登録不要</li>
+        <li>入力内容は外部に送信しません</li>
+      </ul>
       <p class="intro-lead">
         <strong>プロンプト</strong>とは、ChatGPTに送る「お願いの文章」のことです。
         上手に書くほど、ChatGPTの答えが良くなります。このツールが、上手な書き方を代わりに組み立てます。
       </p>
       <ol class="steps">
-        <li><span class="step-num">1</span><span>使いたいツールを選ぶ</span></li>
-        <li><span class="step-num">2</span><span>入力して「プロンプトを作成」</span></li>
-        <li><span class="step-num">3</span><span>コピーしてChatGPTに貼り付け</span></li>
+        <li><span class="step-num">1</span><span>ツールを選ぶ</span></li>
+        <li><span class="step-num">2</span><span>入力して作成</span></li>
+        <li><span class="step-num">3</span><span>コピーしてChatGPTへ</span></li>
       </ol>
+      <p class="intro-privacy">
+        <strong>個人情報に注意：</strong>作ったプロンプトはChatGPTに送ることになります。お客様の氏名・連絡先や社外秘の情報は、「Aさん」「B社」のように置き換えてから入力しましょう。
+      </p>
     </section>
 
     <!-- ===== ツールの切り替えボタン（中身は script.js で作ります） ===== -->
@@ -43,7 +68,7 @@
     <div class="workspace">
 
       <!-- ===== 左側：入力フォーム ===== -->
-      <section class="panel form-panel" aria-labelledby="toolTitle">
+      <section class="panel form-panel" id="formPanel" aria-labelledby="toolTitle">
         <div class="panel-head">
           <h2 id="toolTitle">ツール名</h2>
           <p id="toolDesc" class="panel-desc"></p>
@@ -68,7 +93,7 @@
           <span class="char-count" id="charCount">0文字</span>
         </div>
 
-        <textarea id="output" class="output" spellcheck="false"
+        <textarea id="output" class="output" spellcheck="false" aria-labelledby="outputTitle"
           placeholder="左のフォームに入力して「プロンプトを作成」を押すと、ここにプロンプトが表示されます。&#10;&#10;表示された文章は、ここで直接書き換えることもできます。"></textarea>
 
         <div class="output-actions">
@@ -80,6 +105,7 @@
           <p class="notice-title">安全に使うための注意</p>
           <ul>
             <li>お客様の個人情報（氏名・電話番号など）や社外秘の情報は入力しないようにしましょう。</li>
+            <li>仕事で使う前に、会社のAI利用ルール（使ってよい情報の範囲など）を確認しましょう。</li>
             <li>ChatGPTの答えは間違うことがあります。送信・提出の前に必ず自分で確認しましょう。</li>
           </ul>
         </div>

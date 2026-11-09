@@ -69,7 +69,7 @@ const TOOLS = [
         placeholder: '例：取引先 ABC商事の山田様', help: '会社名や立場も書くと、より適切な敬語になります。' },
       { name: 'purpose', label: 'メールの目的', type: 'select',
         options: ['依頼', 'お礼', 'お詫び', '日程調整', '報告・連絡', 'お断り', '問い合わせ', 'あいさつ'] },
-      { name: 'content', label: '伝えたい内容', type: 'textarea', rows: 5, required: true,
+      { name: 'content', label: '伝えたい内容', type: 'textarea', rows: 5, required: true, privacy: true,
         placeholder: '例：\n・来週の打ち合わせを延期したい\n・候補日は11/18（火）か11/20（木）の午後', help: '箇条書きでOKです。' },
       { name: 'tone', label: '丁寧さ', type: 'select',
         options: ['とても丁寧（社外・目上の方向け）', '標準（一般的なビジネス向け）', 'やや簡潔（社内向け）'] },
@@ -111,7 +111,7 @@ const TOOLS = [
       { name: 'meeting', label: '会議名', type: 'text', placeholder: '例：新商品プロモーション定例会議' },
       { name: 'date', label: '日時', type: 'text', placeholder: '例：2026年11月9日 10:00〜11:00' },
       { name: 'attendees', label: '参加者', type: 'text', placeholder: '例：田中部長、佐藤、鈴木、高橋' },
-      { name: 'memo', label: '会議のメモ', type: 'textarea', rows: 8, required: true,
+      { name: 'memo', label: '会議のメモ', type: 'textarea', rows: 8, required: true, privacy: true,
         placeholder: '会議中に取ったメモをそのまま貼り付けてください。\n走り書き・箇条書きでも大丈夫です。' },
       { name: 'detail', label: 'まとめ方', type: 'select',
         options: ['標準（要点をバランスよく）', '簡潔（1分で読める長さ）', '詳細（話し合いの流れもくわしく）'] },
@@ -164,7 +164,7 @@ const TOOLS = [
     title: '文章校正',
     desc: '誤字脱字や言葉づかいの間違いを直し、読みやすい文章にするプロンプトになります。',
     fields: [
-      { name: 'text', label: '校正したい文章', type: 'textarea', rows: 8, required: true,
+      { name: 'text', label: '校正したい文章', type: 'textarea', rows: 8, required: true, privacy: true,
         placeholder: 'チェックしてほしい文章を貼り付けてください。' },
       { name: 'usage', label: '文章の用途', type: 'select',
         options: ['社外向けメール', '社内向けメール・チャット', '報告書・企画書', 'お知らせ・案内文', 'SNS・ブログ'] },
@@ -256,7 +256,7 @@ const TOOLS = [
     fields: [
       { name: 'goal', label: '目的（何をしたいか）', type: 'text', required: true,
         placeholder: '例：新商品の紹介文を作りたい' },
-      { name: 'details', label: '内容・背景', type: 'textarea', rows: 6, required: true,
+      { name: 'details', label: '内容・背景', type: 'textarea', rows: 6, required: true, privacy: true,
         placeholder: 'ChatGPTに知っておいてほしい情報を書いてください。\n例：商品名、特徴、価格、売りたい相手 など' },
       { name: 'role', label: 'ChatGPTの役割', type: 'text',
         placeholder: '例：経験豊富なマーケティング担当者',
@@ -338,7 +338,14 @@ function renderTabs() {
       <span class="tab-icon">${ICONS[tool.id]}</span>
       <span class="tab-name">${tool.name}</span>
       <span class="tab-sub">${tool.sub}</span>`;
-    btn.addEventListener('click', () => selectTool(tool.id));
+    btn.addEventListener('click', () => {
+      selectTool(tool.id);
+      // スマホなど縦に並ぶ画面では、ツールを選んだら入力欄まで自動で移動する
+      if (window.matchMedia('(max-width: 960px)').matches) {
+        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        $('#formPanel').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+      }
+    });
     nav.appendChild(btn);
   });
 }
@@ -399,14 +406,31 @@ function renderForm(tool) {
     input.name = f.name;
     if (f.placeholder) input.placeholder = f.placeholder;
     if (f.required) input.setAttribute('aria-required', 'true');
+
+    // 読み上げソフトに「注意」や「補足」を入力欄とセットで伝えるためのID一覧
+    const describedBy = [];
+
+    // 長い文章を貼り付ける欄には、入力する前に目に入る位置に個人情報の注意を出す
+    if (f.privacy) {
+      const warn = document.createElement('p');
+      warn.className = 'field-privacy';
+      warn.id = `${id}-privacy`;
+      warn.textContent = 'ChatGPTに送る文章になります。氏名・社名・連絡先などは「Aさん」「B社」のように置き換えてから入力しましょう。';
+      div.appendChild(warn);
+      describedBy.push(warn.id);
+    }
+
     div.appendChild(input);
 
     if (f.help) {
       const help = document.createElement('p');
       help.className = 'field-help';
+      help.id = `${id}-help`;
       help.textContent = f.help;
       div.appendChild(help);
+      describedBy.push(help.id);
     }
+    if (describedBy.length) input.setAttribute('aria-describedby', describedBy.join(' '));
     wrap.appendChild(div);
   });
 }
@@ -469,6 +493,7 @@ function selectTool(id) {
 function clearErrors() {
   $('#formError').textContent = '';
   document.querySelectorAll('.field.invalid').forEach((el) => el.classList.remove('invalid'));
+  document.querySelectorAll('#toolForm [aria-invalid]').forEach((el) => el.removeAttribute('aria-invalid'));
 }
 
 /** 必須の欄が空になっていないか確認する。問題なければ true */
@@ -479,6 +504,7 @@ function validate(tool, values) {
 
   missing.forEach((f) => {
     document.querySelector(`.field[data-name="${f.name}"]`).classList.add('invalid');
+    fieldInput(f.name).setAttribute('aria-invalid', 'true'); // 読み上げソフトに「未入力」を伝える
   });
   $('#formError').textContent = `「${missing.map((f) => f.label).join('」「')}」を入力してください。`;
   fieldInput(missing[0].name).focus();
@@ -571,6 +597,7 @@ function setupEvents() {
     const field = e.target.closest('.field');
     if (field && field.classList.contains('invalid') && e.target.value.trim()) {
       field.classList.remove('invalid');
+      e.target.removeAttribute('aria-invalid');
     }
   });
 
