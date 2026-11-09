@@ -1,0 +1,434 @@
+/* ============================================================
+   Yu AI Tools - style.css
+   見た目（色・大きさ・配置）を決めるファイルです。
+   ============================================================ */
+
+/* ---- 色の設定：ここを変えると全体の色が変わります ---- */
+:root {
+  --navy: #0b2545;        /* ネイビー（メインの濃い色） */
+  --navy-2: #13315c;
+  --blue: #2563eb;        /* ブルー（ボタンなど） */
+  --blue-dark: #1d4ed8;
+  --blue-light: #e8f0fe;  /* 薄いブルー（背景） */
+  --bg: #f4f7fb;          /* ページの背景 */
+  --white: #ffffff;
+  --text: #1e293b;        /* 文字の色 */
+  --muted: #64748b;       /* 補足文字の色 */
+  --border: #d7dfea;      /* 枠線の色 */
+  --danger: #dc2626;
+  --radius: 12px;
+  --shadow: 0 2px 10px rgba(11, 37, 69, 0.07);
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic UI", "Meiryo", sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.container {
+  width: 100%;
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.sp-only { display: none; }
+
+/* ---- ヘッダー ---- */
+.site-header {
+  background: var(--navy);
+  color: var(--white);
+}
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 64px;
+  flex-wrap: wrap;
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+}
+.logo-mark {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  background: var(--blue);
+  font-size: 15px;
+  letter-spacing: 0.02em;
+}
+.logo-text { font-size: 20px; letter-spacing: 0.02em; }
+.tagline {
+  margin: 0;
+  font-size: 14px;
+  color: #c7d5ea;
+}
+
+/* ---- はじめに ---- */
+.intro { padding: 32px 0 8px; }
+.intro h1 {
+  margin: 0 0 12px;
+  font-size: 28px;
+  line-height: 1.4;
+  color: var(--navy);
+}
+.intro-lead {
+  margin: 0 0 20px;
+  max-width: 760px;
+  color: #334155;
+}
+.intro-lead strong { color: var(--blue-dark); }
+
+.steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.steps li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px 8px 8px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--navy);
+}
+.step-num {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--blue);
+  color: var(--white);
+  font-size: 13px;
+}
+
+/* ---- ツール切り替えボタン ---- */
+.tool-tabs {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin: 28px 0 20px;
+}
+.tool-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 14px;
+  background: var(--white);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--navy);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+}
+.tool-tab:hover { border-color: #9db7e6; }
+.tool-tab:focus-visible { outline: 3px solid #93c5fd; outline-offset: 2px; }
+.tool-tab[aria-selected="true"] {
+  border-color: var(--blue);
+  background: var(--blue-light);
+  box-shadow: var(--shadow);
+}
+.tab-icon {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: var(--blue-light);
+  color: var(--blue);
+}
+.tool-tab[aria-selected="true"] .tab-icon { background: var(--blue); color: var(--white); }
+.tab-icon svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.tab-name { font-weight: 700; font-size: 15px; line-height: 1.4; }
+.tab-sub { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+/* ---- 作業エリア（左：入力／右：結果） ---- */
+.workspace {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  align-items: start;
+  padding-bottom: 40px;
+}
+.panel {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 24px;
+  min-width: 0;
+}
+.output-panel {
+  position: sticky;
+  top: 16px;
+}
+.panel-head { margin-bottom: 18px; }
+.panel-head h2 {
+  margin: 0;
+  font-size: 20px;
+  color: var(--navy);
+}
+.panel-desc { margin: 4px 0 0; font-size: 14px; color: var(--muted); }
+.panel-head-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+}
+.char-count { font-size: 13px; color: var(--muted); white-space: nowrap; }
+
+/* ---- 入力欄 ---- */
+.field { margin-bottom: 18px; border: 0; padding: 0; min-width: 0; }
+.field-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  padding: 0;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--navy);
+}
+.badge {
+  display: inline-block;
+  padding: 1px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.7;
+}
+.badge.req { background: var(--navy); color: var(--white); }
+.badge.opt { background: #eef2f7; color: var(--muted); }
+
+.field-help {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+input[type="text"],
+select,
+textarea {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--white);
+  color: var(--text);
+  font: inherit;
+  font-size: 16px; /* 16px未満だとiPhoneで画面が拡大されてしまうため */
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+textarea { resize: vertical; line-height: 1.6; }
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 36px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%2313315c' stroke-width='2'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  cursor: pointer;
+}
+input[type="text"]:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.18);
+}
+::placeholder { color: #9aa8bb; }
+
+.field.invalid input,
+.field.invalid textarea {
+  border-color: var(--danger);
+  background: #fff7f7;
+}
+
+/* チェックボックス */
+.check-list { display: grid; gap: 8px; }
+.check-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+}
+.check-item:hover { background: #f8fafd; }
+.check-item input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  flex-shrink: 0;
+  accent-color: var(--blue);
+}
+
+.form-error {
+  min-height: 0;
+  margin: 0;
+  color: var(--danger);
+  font-weight: 600;
+  font-size: 14px;
+}
+.form-error:not(:empty) { margin-bottom: 12px; }
+
+/* ---- ボタン ---- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 44px; /* 指で押しやすい高さ */
+  padding: 10px 18px;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s, transform 0.05s;
+}
+.btn:active { transform: translateY(1px); }
+.btn:focus-visible { outline: 3px solid #93c5fd; outline-offset: 2px; }
+.btn-large { min-height: 50px; padding: 12px 24px; font-size: 16px; }
+
+.btn-primary { background: var(--blue); color: var(--white); }
+.btn-primary:hover { background: var(--blue-dark); }
+.btn-primary:disabled { background: #a9bce0; cursor: not-allowed; transform: none; }
+
+.btn-outline { background: var(--white); color: var(--blue-dark); border-color: var(--blue); }
+.btn-outline:hover { background: var(--blue-light); }
+
+.btn-ghost { background: transparent; color: var(--muted); }
+.btn-ghost:hover { background: #eef2f7; color: var(--navy); }
+
+.form-actions,
+.output-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+/* ---- 結果欄 ---- */
+.output {
+  min-height: 360px;
+  background: #f8fafd;
+  font-size: 16px; /* 16px未満だとiPhoneでタップ時に画面が拡大されるため */
+  line-height: 1.75;
+}
+.output.flash { animation: flash 0.8s ease-out; }
+@keyframes flash {
+  from { box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.35); }
+  to   { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+}
+.output-actions { margin-top: 14px; }
+
+.notice {
+  margin-top: 20px;
+  padding: 14px 16px;
+  background: var(--blue-light);
+  border-left: 4px solid var(--blue);
+  border-radius: 8px;
+  font-size: 13px;
+  color: #334155;
+}
+.notice-title { margin: 0 0 4px; font-weight: 700; color: var(--navy); }
+.notice ul { margin: 0; padding-left: 1.2em; }
+
+/* ---- フッター ---- */
+.site-footer {
+  background: var(--navy);
+  color: #c7d5ea;
+  font-size: 13px;
+  padding: 18px 0;
+}
+.site-footer p { margin: 0; }
+
+/* ---- お知らせ（トースト） ---- */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translate(-50%, 20px);
+  max-width: calc(100% - 32px);
+  padding: 12px 20px;
+  background: var(--navy);
+  color: var(--white);
+  border-radius: 999px;
+  box-shadow: 0 6px 20px rgba(11, 37, 69, 0.3);
+  font-size: 14px;
+  font-weight: 600;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s, transform 0.2s;
+  z-index: 100;
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+/* ============================================================
+   画面サイズごとの調整（レスポンシブ対応）
+   ============================================================ */
+
+/* タブレット・小さめのパソコン */
+@media (max-width: 960px) {
+  .tool-tabs { grid-template-columns: repeat(3, 1fr); }
+  .workspace { grid-template-columns: 1fr; }
+  .output-panel { position: static; }
+}
+
+/* スマートフォン */
+@media (max-width: 600px) {
+  .sp-only { display: inline; }
+  .tagline { display: none; }
+  .intro { padding-top: 22px; }
+  .intro h1 { font-size: 22px; }
+  .steps { flex-direction: column; gap: 8px; }
+  .steps li { border-radius: 10px; }
+
+  .tool-tabs { grid-template-columns: repeat(2, 1fr); gap: 8px; margin: 20px 0 16px; }
+  .tool-tab { padding: 12px; }
+  .tool-tab:last-child { grid-column: 1 / -1; }
+  .tab-sub { display: none; }
+
+  .panel { padding: 18px 16px; }
+  .form-actions .btn,
+  .output-actions .btn { flex: 1 1 100%; }
+  .output { min-height: 280px; }
+}

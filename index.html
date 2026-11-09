@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <!-- スマートフォンでも画面幅に合わせて表示するための設定 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Yu AI Tools | ChatGPTプロンプト作成ツール</title>
+  <meta name="description" content="ChatGPTを仕事で使う初心者向け。フォームに入力するだけで、実用的なプロンプトが作れます。">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ===== ヘッダー（一番上の帯） ===== -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="logo">
+        <span class="logo-mark">Yu</span>
+        <span class="logo-text">プロンプト作成ツール</span>
+      </div>
+      <p class="tagline">ChatGPTへの「お願い文」を、かんたん作成</p>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- ===== はじめての方への説明 ===== -->
+    <section class="intro">
+      <h1>仕事で使えるプロンプトを、<br class="sp-only">入力するだけで。</h1>
+      <p class="intro-lead">
+        <strong>プロンプト</strong>とは、ChatGPTに送る「お願いの文章」のことです。
+        上手に書くほど、ChatGPTの答えが良くなります。このツールが、上手な書き方を代わりに組み立てます。
+      </p>
+      <ol class="steps">
+        <li><span class="step-num">1</span><span>使いたいツールを選ぶ</span></li>
+        <li><span class="step-num">2</span><span>入力して「プロンプトを作成」</span></li>
+        <li><span class="step-num">3</span><span>コピーしてChatGPTに貼り付け</span></li>
+      </ol>
+    </section>
+
+    <!-- ===== ツールの切り替えボタン（中身は script.js で作ります） ===== -->
+    <nav class="tool-tabs" id="toolTabs" role="tablist" aria-label="ツールの種類"></nav>
+
+    <div class="workspace">
+
+      <!-- ===== 左側：入力フォーム ===== -->
+      <section class="panel form-panel" aria-labelledby="toolTitle">
+        <div class="panel-head">
+          <h2 id="toolTitle">ツール名</h2>
+          <p id="toolDesc" class="panel-desc"></p>
+        </div>
+
+        <form id="toolForm" novalidate>
+          <div id="formFields"></div>
+          <p class="form-error" id="formError" role="alert"></p>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary btn-large">プロンプトを作成</button>
+            <button type="button" class="btn btn-outline" id="sampleBtn">入力例を入れる</button>
+            <button type="button" class="btn btn-ghost" id="clearBtn">クリア</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- ===== 右側：できあがったプロンプト ===== -->
+      <section class="panel output-panel" id="outputPanel" aria-labelledby="outputTitle">
+        <div class="panel-head panel-head-row">
+          <h2 id="outputTitle">できあがったプロンプト</h2>
+          <span class="char-count" id="charCount">0文字</span>
+        </div>
+
+        <textarea id="output" class="output" spellcheck="false"
+          placeholder="左のフォームに入力して「プロンプトを作成」を押すと、ここにプロンプトが表示されます。&#10;&#10;表示された文章は、ここで直接書き換えることもできます。"></textarea>
+
+        <div class="output-actions">
+          <button type="button" class="btn btn-primary btn-large" id="copyBtn" disabled>コピーする</button>
+          <a class="btn btn-outline" href="https://chatgpt.com/" target="_blank" rel="noopener noreferrer">ChatGPTを開く ↗</a>
+        </div>
+
+        <div class="notice">
+          <p class="notice-title">安全に使うための注意</p>
+          <ul>
+            <li>お客様の個人情報（氏名・電話番号など）や社外秘の情報は入力しないようにしましょう。</li>
+            <li>ChatGPTの答えは間違うことがあります。送信・提出の前に必ず自分で確認しましょう。</li>
+          </ul>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>Yu AI Tools ― 入力した内容はお使いの端末（ブラウザ）の中だけで処理され、外部には送信されません。</p>
+    </div>
+  </footer>
+
+  <!-- 「コピーしました」などのお知らせ表示 -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
