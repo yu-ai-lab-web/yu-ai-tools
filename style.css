@@ -418,6 +418,48 @@ textarea:focus {
 .notice-title { margin: 0 0 4px; font-weight: 700; color: var(--navy); }
 .notice ul { margin: 0; padding-left: 1.2em; }
 
+/* ---- 広告表記（ページ上部） ---- */
+.pr-notice {
+  margin: 0;
+  padding: 6px 0;
+  background: #eef2f7;
+  border-bottom: 1px solid var(--border);
+  font-size: 12px;
+  color: #475569;
+}
+.pr-notice .container { display: block; }
+
+/* ---- おすすめサービス（広告） ---- */
+.recommend { padding-bottom: 40px; }
+.recommend-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.recommend-head h2 { margin: 0; font-size: 18px; color: var(--navy); }
+.pr-label {
+  padding: 1px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--muted);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--muted);
+  line-height: 1.7;
+}
+.recommend-card {
+  max-width: 760px;
+  padding: 18px 20px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.recommend-for { margin: 0 0 4px; font-size: 13px; font-weight: 700; color: var(--blue-dark); }
+.recommend-desc { margin: 0 0 10px; font-size: 14px; color: #334155; }
+.recommend-link { margin: 0 0 6px; font-weight: 700; }
+.recommend-link a { color: var(--blue-dark); overflow-wrap: anywhere; }
+.recommend-note { margin: 0; font-size: 12px; color: var(--muted); }
+
 /* ---- フッター ---- */
 .site-footer {
   background: var(--navy);
@@ -426,6 +468,27 @@ textarea:focus {
   padding: 18px 0;
 }
 .site-footer p { margin: 0; }
+.site-footer p + p { margin-top: 4px; }
+.footer-links {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 18px;
+}
+.footer-links a { color: var(--white); }
+
+/* ---- プライバシーポリシーページ ---- */
+.doc { max-width: 760px; padding: 32px 0 48px; }
+.doc h1 { margin: 0 0 16px; font-size: 26px; color: var(--navy); }
+.doc h2 { margin: 28px 0 8px; font-size: 18px; color: var(--navy); }
+.doc p, .doc li { font-size: 15px; }
+.doc a { color: var(--blue-dark); overflow-wrap: anywhere; }
+.doc-table { width: 100%; border-collapse: collapse; font-size: 14px; background: var(--white); }
+.doc-table th, .doc-table td { border: 1px solid var(--border); padding: 8px 10px; text-align: left; vertical-align: top; }
+.doc-table th { background: #eef2f7; color: var(--navy); white-space: nowrap; }
+.doc-back { margin-top: 32px; }
 
 /* ---- お知らせ（トースト） ---- */
 .toast {
@@ -493,6 +556,14 @@ textarea:focus {
   .form-actions .btn,
   .output-actions .btn { flex: 1 1 100%; }
   .output { min-height: 280px; }
+
+  .recommend-card { padding: 16px; }
+  .doc { padding-top: 22px; }
+  .doc h1 { font-size: 22px; }
+  /* 表は縦並びにして、横にはみ出さないようにする */
+  .doc-table, .doc-table tbody, .doc-table tr, .doc-table th, .doc-table td { display: block; width: 100%; }
+  .doc-table tr { margin-bottom: 8px; }
+  .doc-table th { white-space: normal; }
 }
 
 /* 「視覚効果を減らす」設定の人には、アニメーションを止める */
